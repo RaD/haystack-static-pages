@@ -15,19 +15,23 @@ Basic Usage:
 
 	eg. ::
 
-	    HAYSTACK\_STATIC\_PAGES = (
+	    HAYSTACK_STATIC_PAGES = (
                 'static-about_us',                        # A named url
                 'static-help',                            # Another named url
                 'http://www.example.com/some_page.html',  # An fully qualified url
+                '/path/to/local.html'                     # or full path to local file
 	    )
 
 #. ``./manage.py syncdb`` to create the necessary tables.
-#. ``./manage.py crawl_static_pages`` to populate the database with the static
-   page content.  This is needed for Haystack to properly map the urls to the
-   content. Output should indicate which pages were crawled and where, as well
-   as the total number of pages found.
-   **Crawled pages must be accessible through an http connection.  ie., they
-   must be viewable in a browser.**
+#. Fill model (choose one):
+
+   * ``./manage.py crawl_static_pages`` to populate the database with the static
+     page content.  This is needed for Haystack to properly map the urls to the
+     content. Output should indicate which pages were crawled and where, as well
+     as the total number of pages found.
+     **Crawled pages must be accessible through an http connection.  ie., they
+     must be viewable in a browser.**
+   * ``./manage.py local_static_pages``, pay attention to fill ``HAYSTACK_STATIC_PAGES`` with local pathes.
 #. ``./manage.py rebuild_index`` to create the search indexes used by Haystack.
    You should see a note about how many static pages were indexed.  The number
    of static pages indexed should match the number of static pages created in
