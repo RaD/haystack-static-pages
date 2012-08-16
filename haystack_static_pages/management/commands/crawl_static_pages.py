@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import urllib2
 
 from django.conf import settings
@@ -44,12 +45,29 @@ class Command(BaseCommand):
         if self.language:
             translation.activate(self.language)
 
-        for url in settings.HAYSTACK_STATIC_PAGES:
-            if not url.startswith('http://'):
-                if self.port:
-                    url = 'http://%s:%r%s' % (Site.objects.get_current().domain, self.port, reverse(url))
+        for resource in settings.HAYSTACK_STATIC_PAGES:
+            if resource.startswith('/') and os.path.isfile(resource):
+                html = open(resource, 'r')
+                url = None
+                for key in settings.HAYSTACK_STATIC_MAPPING.keys():
+                    if resource.startswith(key):
+                        tail = resource.split(key + '/')[1]
+                        head = settings.HAYSTACK_STATIC_MAPPING[key]
+                        url = u'%s/%s' % (head, tail)
+            else:
+                if resource.startswith('http://'):
+                    url = resource
                 else:
-                    url = 'http://%s%s' % (Site.objects.get_current().domain, reverse(url))
+                    if self.port:
+                        url = 'http://%s:%r%s' % (Site.objects.get_current().domain, self.port, reverse(resource))
+                    else:
+                        url = 'http://%s%s' % (Site.objects.get_current().domain, reverse(resource))
+
+                try:
+                    html = urllib2.urlopen(url)
+                except urllib2.URLError:
+                    print "Error while reading '%s'" % url
+                    continue
 
             print 'Analyzing %s...' % url
 
@@ -60,12 +78,6 @@ class Command(BaseCommand):
                 print '%s is new, adding...' % url
                 page = StaticPage(url=url)
                 pass
-
-            try:
-                html = urllib2.urlopen(url)
-            except urllib2.URLError:
-                print "Error while reading '%s'" % url
-                continue
 
             soup = BeautifulSoup(html)
             try:
