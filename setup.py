@@ -53,16 +53,11 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    # packages=[
-    #     'haystack_static_pages',
-    #     'haystack_static_pages.management',
-    #     'haystack_static_pages.management.commands',
-    #     'haystack_static_pages.migrations'
-    # ],
     package_data={
         'haystack_static_pages': ['templates/*']
     },
-    install_requires=[
-        'django', 'haystack'
-    ],
+    # we sure that all are already installed
+    #install_requires=[
+    #    'django', 'haystack'
+    #],
 )
