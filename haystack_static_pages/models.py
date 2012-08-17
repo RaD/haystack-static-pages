@@ -32,4 +32,4 @@ class StaticPage(models.Model):
         tree = lxml.html.fromstring(self.content)
         return dict(
             title=self.title,
-            desc=lxml.html.tostring(tree.body.xpath('//div[@id="yui-main"]')[0]))
+            desc=lxml.html.tostring(tree.body))
