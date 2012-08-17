@@ -89,8 +89,13 @@ class Command(BaseCommand):
                 page.description = meta.get('content', '')
             else:
                 page.description = ''
+
+            # save only body without scripts
+            body = soup.find('body')
+            [x.extract() for x in body.findAll('script')]
+            page.content = body.text
+
             page.language = soup.html.get('lang') or self.language
-            page.content = soup.prettify()
             page.save()
             count += 1
 
