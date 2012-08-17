@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import lxml.html
-
 from django.db import models
 from django.template.defaultfilters import truncatewords_html
 from django.utils.encoding import force_unicode
@@ -29,7 +27,4 @@ class StaticPage(models.Model):
         return self.url
 
     def search(self):
-        tree = lxml.html.fromstring(self.content)
-        return dict(
-            title=self.title,
-            desc=lxml.html.tostring(tree.body))
+        return dict(source=_(u'Static'), title=self.title, desc=self.content)
