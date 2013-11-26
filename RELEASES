@@ -1,16 +1,16 @@
-haystack\_static\_pages-0.4.0ALPHA
+haystack_static_pages-0.4.0ALPHA
 ==================================
 
 Tagged on August 9, 2012 by Ruslan Popov <ruslan.popov@gmail.com>
 
-Added command to process local resources:
+Added an ability to process local resources. Just rebuild your index:
 
          ./manage.py reset haystack_static_pages
-         ./manage.py local_static_pages -l ru_RU
+         ./manage.py crawl_static_pages -l ru_RU
          ./manage.py rebuild_index
 
 
-haystack\_static\_pages-0.4.0ALPHA
+haystack_static_pages-0.4.0ALPHA
 ==================================
 
 Tagged on July 28, 2010 by David Sauve <dsauve@trapeze.com>
