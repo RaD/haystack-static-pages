@@ -53,7 +53,7 @@ class Command(BaseCommand):
                     if resource.startswith(key):
                         tail = resource.split(key + '/')[1]
                         head = settings.HAYSTACK_STATIC_MAPPING[key]
-                        url = u'%s/%s' % (head, tail)
+                        url = u'%s%s' % (head, tail)
             else:
                 if resource.startswith('http://'):
                     url = resource
