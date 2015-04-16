@@ -19,7 +19,7 @@ class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('-p', '--port', action='store', dest='port', default=None,
             help='The port number to use for internal urls.'),
-        make_option('-l', '--language', action='store', dest='language', default=None,
+        make_option('-l', '--language', action='store', dest='language', default='',
             help='The language to use when requesting the page'),
     )
     help = 'Setup static pages defined in HAYSTACK_STATIC_PAGES for indexing by Haystack'
@@ -78,7 +78,6 @@ class Command(BaseCommand):
             except StaticPage.DoesNotExist:
                 print '%s is new, adding...' % url
                 page = StaticPage(url=url)
-                pass
 
             soup = BeautifulSoup(html)
             try:
