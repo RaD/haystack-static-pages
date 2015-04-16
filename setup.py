@@ -56,6 +56,9 @@ setup(
     package_data={
         'haystack_static_pages': ['templates/*']
     },
+    install_requires=[
+        'beautifulsoup4',
+    ],
     # we sure that all are already installed
     #install_requires=[
     #    'django', 'haystack'
