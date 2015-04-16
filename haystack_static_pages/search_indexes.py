@@ -12,6 +12,6 @@ class StaticPageIndex(indexes.SearchIndex, indexes.Indexable):
     content = indexes.CharField(model_attr='content')
     description = indexes.CharField(model_attr='description')
     language = indexes.CharField(model_attr='language')
-    
+
     def get_model(self):
         return StaticPage

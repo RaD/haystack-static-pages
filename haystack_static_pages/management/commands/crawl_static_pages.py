@@ -2,6 +2,8 @@
 
 import os
 import urllib2
+from optparse import make_option
+from bs4 import BeautifulSoup
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -9,9 +11,6 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.urlresolvers import reverse
 from django.utils import translation
 from django.utils.html import escape
-from optparse import make_option
-
-from BeautifulSoup import BeautifulSoup
 
 from haystack_static_pages.models import StaticPage
 
@@ -44,6 +43,8 @@ class Command(BaseCommand):
 
         if self.language:
             translation.activate(self.language)
+
+        StaticPage.objects.all().delete()
 
         for resource in settings.HAYSTACK_STATIC_PAGES:
             if resource.startswith('/') and os.path.isfile(resource):
@@ -96,6 +97,8 @@ class Command(BaseCommand):
             page.content = body.text
 
             page.language = soup.html.get('lang') or self.language
+
+            page.full_clean()
             page.save()
             count += 1
 
