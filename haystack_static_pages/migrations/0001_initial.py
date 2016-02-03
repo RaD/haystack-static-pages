@@ -1,37 +1,28 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-from south.db import db
-from south.v2 import SchemaMigration
+from django.db import migrations, models
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'StaticPage'
-        db.create_table('haystack_static_pages_staticpage', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=255)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('content', self.gf('django.db.models.fields.TextField')()),
-            ('language', self.gf('django.db.models.fields.CharField')(max_length=5)),
-        ))
-        db.send_create_signal('haystack_static_pages', ['StaticPage'])
+    dependencies = [
+    ]
 
-    def backwards(self, orm):
-        # Deleting model 'StaticPage'
-        db.delete_table('haystack_static_pages_staticpage')
-
-    models = {
-        'haystack_static_pages.staticpage': {
-            'Meta': {'object_name': 'StaticPage'},
-            'content': ('django.db.models.fields.TextField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'language': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '255'})
-        }
-    }
-
-    complete_apps = ['haystack_static_pages']
+    operations = [
+        migrations.CreateModel(
+            name='StaticPage',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('title', models.CharField(max_length=255, verbose_name='title')),
+                ('url', models.CharField(max_length=255, null=True, verbose_name='url', blank=True)),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('content', models.TextField(verbose_name='content')),
+                ('language', models.CharField(max_length=5, null=True, verbose_name='language', blank=True)),
+            ],
+            options={
+                'verbose_name': 'static page',
+                'verbose_name_plural': 'static pages',
+            },
+        ),
+    ]
